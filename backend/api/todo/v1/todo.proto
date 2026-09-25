@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package todo.v1;
+
+option go_package = "example.com/backend/api/todo/v1;todov1";
+
+service TodoService {
+  rpc ListTodos(ListTodosRequest) returns (ListTodosResponse);
+  rpc CreateTodo(CreateTodoRequest) returns (Todo);
+  rpc GetTodo(GetTodoRequest) returns (Todo);
+  rpc UpdateTodo(UpdateTodoRequest) returns (Todo);
+  rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse);
+}
+
+message Todo {
+  int64 id = 1;
+  string title = 2;
+  bool completed = 3;
+  string created_at = 4;
+  int64 priority = 5;
+  string due_date = 6;
+}
+
+message ListTodosRequest {
+  optional bool completed = 1;
+  optional int64 priority = 2;
+}
+
+message ListTodosResponse {
+  repeated Todo todos = 1;
+}
+
+message CreateTodoRequest {
+  string title = 1;
+  bool completed = 2;
+  int64 priority = 3;
+}
+
+message GetTodoRequest {
+  int64 id = 1;
+}
+
+message UpdateTodoRequest {
+  int64 id = 1;
+  optional string title = 2;
+  optional bool completed = 3;
+  optional int64 priority = 4;
+  optional string due_date = 5;
+}
+
+message DeleteTodoRequest {
+  int64 id = 1;
+}
+
+message DeleteTodoResponse {
+  bool deleted = 1;
+}
